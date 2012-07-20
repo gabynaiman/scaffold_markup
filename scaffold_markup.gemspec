@@ -6,10 +6,10 @@ Gem::Specification.new do |s|
   s.name        = "scaffold_markup"
   s.version     = ScaffoldMarkup::VERSION
   s.authors     = ["Gabriel Naiman"]
-  s.email       = ["gabynaiman@gmail.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.email       = %w(gabynaiman@gmail.com)
+  s.homepage    = 'https://github.com/gabynaiman/scaffold_markup'
+  s.summary     = 'Rails admin scaffolding'
+  s.description = 'Rails admin scaffolding'
 
   s.rubyforge_project = "scaffold_markup"
 
