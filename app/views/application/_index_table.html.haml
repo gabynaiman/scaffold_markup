@@ -1,0 +1,3 @@
+= page.table @collection,
+             resource_class.accessible_attribute_names.map { |a| resource_class.reflected_association(a) ? resource_class.reflected_association(a).name : a },
+             :actions => [:show, :edit, :remove]

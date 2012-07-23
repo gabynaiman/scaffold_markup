@@ -1,0 +1,5 @@
+- @model.class.accessible_attribute_names.each do |attribute|
+  - if @model.class.reflected_association(attribute)
+    = form.association @model.class.reflected_association(attribute).name, :required => @model.class.validates_presence?(attribute)
+  - else
+    = form.text attribute, :required => @model.class.validates_presence?(attribute)

@@ -1,0 +1,24 @@
+body {
+    padding-top: 60px;
+}
+
+table td.actions {
+    width: 30px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.control-group .display {
+    padding: 4px;
+    display: inline-block;
+    border: 1px solid #eeeeee;
+    border-radius: 5px;
+    min-width: 100px;
+    min-height: 18px;
+}
+
+.form-actions .btn {
+    margin-right: 5px;
+}

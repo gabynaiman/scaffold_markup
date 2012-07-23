@@ -1,0 +1,5 @@
+= page_builder do |page|
+  = page.form_for @model do |form|
+    = render 'form_attributes', :page => page, :form => form
+    = form.actions do
+      = render 'form_actions', :page => page, :form => form

@@ -1,0 +1,3 @@
+= page.submit_primary 'Save', :name => :save
+= page.submit_primary 'Save and New', :name => :save_and_new if @model.new_record?
+= page.link_button 'Cancel', url_helper.list_resource(@model.class)
