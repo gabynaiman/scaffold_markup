@@ -18,7 +18,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Put into aplication.js file
+
+	//= require jquery.livequery
+	//= require bootstrap
+
+Put into application.css file
+
+	*= require bootstrap
+ 	*= require scaffold_markup
+
+All scaffold controller must include
+
+	include ScaffoldMarkup::Controllers::Base
 
 ## Contributing
 
