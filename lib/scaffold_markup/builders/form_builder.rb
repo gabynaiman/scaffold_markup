@@ -10,7 +10,7 @@ module ScaffoldMarkup
 
       def to_s
         _self = self
-        html = Form.horizontal(:method => :post, :action => model.new_record? ? url.list_resource(model.class) : url.resource(model), 'accept-charset' => 'UTF-8') do
+        html = Form.horizontal(:method => :post, :action => model.new_record? ? url.list_resource(model.class, _self.template.controller_namespace) : url.resource(model, _self.template.controller_namespace), 'accept-charset' => 'UTF-8') do
           append Input.hidden :name => 'authenticity_token', :value => _self.template.form_authenticity_token
           append Input.hidden :name => '_method', :value => :put unless _self.model.new_record?
           append _self.template.capture(_self, &_self.block)

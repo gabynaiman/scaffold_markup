@@ -57,17 +57,17 @@ module ScaffoldMarkup
             case action
               when :show
                 #TODO: El append de DropdownButton tiene que soportar bloques como parametro
-                append(Link.new(_self.url.resource(element)) do
+                append(Link.new(_self.url.resource(element, _self.template.controller_namespace)) do
                   append Icon.new('list')
                   append '&nbsp;Show'
                 end)
               when :edit
-                append(Link.new(_self.url.edit_resource(element)) do
+                append(Link.new(_self.url.edit_resource(element, _self.template.controller_namespace)) do
                   append Icon.new('pencil')
                   append '&nbsp;Edit'
                 end)
               when :remove
-                append(Link.new(_self.url.resource(element), 'data-confirm' => 'Are you sure?', 'data-method' => :delete) do
+                append(Link.new(_self.url.resource(element, _self.template.controller_namespace), 'data-confirm' => 'Are you sure?', 'data-method' => :delete) do
                   append Icon.new('trash')
                   append '&nbsp;Remove'
                 end)

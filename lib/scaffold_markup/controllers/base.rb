@@ -1,10 +1,8 @@
 module ScaffoldMarkup
   module Controllers
     module Base
-      attr_reader :resource_class
-
       def self.included(base)
-        base.before_filter :identify_resource
+        base.helper_method [:resource_class, :controller_namespace]
       end
 
       def index
@@ -59,10 +57,12 @@ module ScaffoldMarkup
         redirect_to :action => :index
       end
 
-      private
+      def resource_class
+        @resource_class ||= controller_name.classify.constantize
+      end
 
-      def identify_resource
-        @resource_class = params[:controller].classify.constantize
+      def controller_namespace
+        @controller_namespace ||= self.class.name.split('::')[0..-2].map(&:underscore).join('_') unless self.class.name.split('::')[0..-2].empty?
       end
 
     end
