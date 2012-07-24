@@ -12,8 +12,8 @@ module ScaffoldMarkup
         @container.to_s
       end
 
-      def link(text, url)
-        @container.append Link.new(text, url)
+      def link(*args, &block)
+        @container.append Link.new(*args, &block)
       end
 
       def pull_right
