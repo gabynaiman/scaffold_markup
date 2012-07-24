@@ -14,6 +14,7 @@ require 'scaffold_markup/helpers/url_helper'
 
 require 'scaffold_markup/controllers/base'
 
+require 'scaffold_markup/builders/tag_builder'
 require 'scaffold_markup/builders/base_builder'
 require 'scaffold_markup/builders/nav_container_builder'
 require 'scaffold_markup/builders/nav_bar_builder'

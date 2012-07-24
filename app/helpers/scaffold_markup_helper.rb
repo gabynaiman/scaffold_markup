@@ -8,4 +8,8 @@ module ScaffoldMarkupHelper
     ScaffoldMarkup::Helpers::UrlHelper.new(self)
   end
 
+  def html
+  	ScaffoldMarkup::Builders::TagBuilder.new
+  end
+
 end
