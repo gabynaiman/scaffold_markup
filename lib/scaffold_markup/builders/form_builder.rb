@@ -9,7 +9,7 @@ module ScaffoldMarkup
         @model = model
         @options = options
         @options[:url] ||= model.new_record? ? url.list_resource(model.class, template.controller_namespace) : url.resource(model, template.controller_namespace)
-        @options[:method] ||= model.respond_to?(:new_record?) && model.new_record? ? :put : :post
+        @options[:method] ||= model.respond_to?(:new_record?) && !model.new_record? ? :put : :post
       end
 
       def to_s
