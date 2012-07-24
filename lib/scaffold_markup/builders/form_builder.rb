@@ -8,7 +8,7 @@ module ScaffoldMarkup
         super(template, &block)
         @model = model
         @options = options
-        @options[:url] ||= model.new_record? ? url.list_resource(model.class, _self.template.controller_namespace) : url.resource(model, _self.template.controller_namespace)
+        @options[:url] ||= model.new_record? ? url.list_resource(model.class, template.controller_namespace) : url.resource(model, template.controller_namespace)
         @options[:method] ||= model.respond_to?(:new_record?) && model.new_record? ? :put : :post
       end
 
