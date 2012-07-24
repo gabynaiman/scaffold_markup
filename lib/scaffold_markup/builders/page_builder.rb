@@ -10,9 +10,9 @@ module ScaffoldMarkup
         html
       end
 
-      def container(&block)
+      def container(attributes={}, &block)
         #TODO: Container tiene que ser un tag de TwitterBootstrapMarkup
-        Tag.new(:div, template.capture(self, &block), :class => 'container').html_safe
+        Tag.new(:div, template.capture(self, &block), attributes.prepend!(:class, 'container')).html_safe
       end
 
       def title(text)
@@ -31,8 +31,8 @@ module ScaffoldMarkup
         Submit.primary(*args).html_safe
       end
 
-      def form_for(model, &block)
-        FormBuilder.new(template, model, &block).html_safe
+      def form_for(model, options={}, &block)
+        FormBuilder.new(template, model, options, &block).html_safe
       end
 
       def nav_bar(&block)

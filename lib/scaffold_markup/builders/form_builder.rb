@@ -2,17 +2,21 @@ module ScaffoldMarkup
   module Builders
     class FormBuilder < BaseBuilder
       attr_reader :model
+      attr_reader :options
 
-      def initialize(template, model, &block)
+      def initialize(template, model, options={}, &block)
         super(template, &block)
         @model = model
+        @options = options
+        @options[:url] ||= model.new_record? ? url.list_resource(model.class, _self.template.controller_namespace) : url.resource(model, _self.template.controller_namespace)
+        @options[:method] ||= model.respond_to?(:new_record?) && model.new_record? ? :put : :post
       end
 
       def to_s
         _self = self
-        html = Form.horizontal(:method => :post, :action => model.new_record? ? url.list_resource(model.class, _self.template.controller_namespace) : url.resource(model, _self.template.controller_namespace), 'accept-charset' => 'UTF-8') do
+        html = Form.horizontal(:method => :post, :action => options[:url], 'accept-charset' => 'UTF-8') do
           append Input.hidden :name => 'authenticity_token', :value => _self.template.form_authenticity_token
-          append Input.hidden :name => '_method', :value => :put unless _self.model.new_record?
+          append Input.hidden :name => '_method', :value => _self.options[:method]
           append _self.template.capture(_self, &_self.block)
         end.to_s
         flash_errors
@@ -20,19 +24,21 @@ module ScaffoldMarkup
       end
 
       def display(attribute)
-        association = model.class.reflected_association(attribute)
+        association = model.class.reflected_association(attribute) if model.class.respond_to?(:reflected_association)
         display_value = association ? model.send(association.name).to_s : model.send(attribute)
         ControlGroup.new(model.class.human_attribute_name(attribute), :class => 'bold') do
           append Tag.block(:span, display_value, :class => 'display')
         end.html_safe
       end
 
-      def text(attribute, options={})
-        _self = self
-        ControlGroup.new("#{model.class.human_attribute_name(attribute)}#{options[:required] ? ' (*)' : ''}", :class => options[:required] ? 'bold' : '') do
-          text_box = append Input.text(:id => "#{_self.model.class.model_name.underscore}_#{attribute}", :name => "#{_self.model.class.model_name.underscore}[#{attribute}]", :value => _self.model.send(attribute))
-          text_box.attributes[:required] = :required if options[:required]
-        end.html_safe
+      [:text, :password, :email].each do |type|
+        define_method type do |attribute, options={}|
+          _self = self
+          ControlGroup.new("#{model.class.human_attribute_name(attribute)}#{options[:required] ? ' (*)' : ''}", :class => options[:required] ? 'bold' : '') do
+            text_box = append Input.send(type, :id => "#{_self.model.class.model_name.underscore}_#{attribute}", :name => "#{_self.model.class.model_name.underscore}[#{attribute}]", :value => _self.model.send(attribute))
+            text_box.attributes[:required] = :required if options[:required]
+          end.html_safe
+        end
       end
 
       def association(association_name, options={})
