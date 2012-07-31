@@ -39,6 +39,16 @@ module ScaffoldMarkup
             text_box.attributes[:required] = :required if options[:required]
           end.html_safe
         end
+
+        Input::SIZES.each do |size|
+          define_method "#{type}_#{size}" do |attribute, options={}|
+            _self = self
+            ControlGroup.new("#{model.class.human_attribute_name(attribute)}#{options[:required] ? ' (*)' : ''}", :class => options[:required] ? 'bold' : '') do
+              text_box = append Input.send("#{type}_#{size}", :id => "#{_self.model.class.model_name.underscore}_#{attribute}", :name => "#{_self.model.class.model_name.underscore}[#{attribute}]", :value => _self.model.send(attribute))
+              text_box.attributes[:required] = :required if options[:required]
+            end.html_safe
+          end
+        end
       end
 
       def association(association_name, options={})
