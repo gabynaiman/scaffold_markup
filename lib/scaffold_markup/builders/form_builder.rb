@@ -51,6 +51,16 @@ module ScaffoldMarkup
         end
       end
 
+      InputSize::VALUES.each do |size|
+        define_method "textarea_#{size}" do |attribute, options={}|
+          _self = self
+          ControlGroup.new("#{model.class.human_attribute_name(attribute)}#{options[:required] ? ' (*)' : ''}", :class => options[:required] ? 'bold' : '') do
+            text_box = append Textarea.send("#{size}", _self.model.send(attribute), options.merge(:id => "#{_self.model.class.model_name.underscore}_#{attribute}", :name => "#{_self.model.class.model_name.underscore}[#{attribute}]"))
+            text_box.attributes[:required] = :required if options[:required]
+          end.html_safe
+        end
+      end
+
       def association(association_name, options={})
         _self = self
         attribute = model.class.reflections[association_name].foreign_key
