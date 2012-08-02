@@ -40,7 +40,7 @@ module ScaffoldMarkup
           end.html_safe
         end
 
-        Input::SIZES.each do |size|
+        InputSize::VALUES.each do |size|
           define_method "#{type}_#{size}" do |attribute, options={}|
             _self = self
             ControlGroup.new("#{model.class.human_attribute_name(attribute)}#{options[:required] ? ' (*)' : ''}", :class => options[:required] ? 'bold' : '') do
