@@ -20,6 +20,10 @@ module ScaffoldMarkup
         @container.pull_right
       end
 
+      def capture(&block)
+        @container.append super
+      end
+
     end
   end
 end

@@ -13,6 +13,10 @@ module ScaffoldMarkup
         @url = Helpers::UrlHelper.new(template)
       end
 
+      def capture(&block)
+        template.capture(self, &block)
+      end
+
       def html_safe
         to_s.html_safe
       end
